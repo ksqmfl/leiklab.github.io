@@ -701,11 +701,11 @@
             const container = document.getElementById('gallery-grid');
             
             portfolioConfig.galleryData.forEach((item, index) => {
-                // 修正：テーマカラーに合わせたプレースホルダー画像を生成
-                // placehold.co のURL: サイズ/背景色/文字色?text=文字
-                const bgColor = "1e3a8a"; // ネイビー
-                const textColor = "ffffff"; // 白
-                const src = `https://placehold.co/1200x1200/${bgColor}/${textColor}?text=${encodeURIComponent(item.label)}`;
+                // 修正: 実際にアップロードされた画像を読み込む設定に変更
+                // 元のダミー画像生成コードは削除
+                
+                // 画像パスの生成: ./image/image1.jpg, ./image/image2.jpg ...
+                const src = `${portfolioConfig.imageFolder}image${index+1}${portfolioConfig.imageExtension}`;
                 
                 const div = document.createElement('div');
                 div.className = "gallery-item";
