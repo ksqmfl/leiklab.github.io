@@ -423,18 +423,40 @@
             width: 70%;
             font-family: 'Noto Sans JP', sans-serif;
         }
+
+        /* === Companyセクション専用スタイル（縮小） === */
+        /* さらに2pt程度縮小調整 */
+        /* PC: 5.5rem -> 4.5rem, Mobile: 2.8rem -> 2.2rem */
+        /* Text: 1rem -> 0.875rem (14px) */
+        #company-section .section-title {
+            font-size: 2.2rem;
+        }
+        #company-section .company-row {
+            font-size: 0.875rem; /* 14px */
+            padding: 0.75rem 0;
+        }
         
+        @media (min-width: 768px) {
+            #company-section .section-title {
+                font-size: 4.5rem;
+            }
+        }
+
         /* スマホ対応 */
         @media (max-width: 768px) {
             .company-row { 
                 display: block; 
-                padding: 1rem 0;
+                padding: 0.75rem 0;
             }
             .company-label { 
                 width: 100%; 
                 margin-bottom: 0.5rem; 
                 font-size: 0.9rem;
                 opacity: 0.8;
+            }
+            /* Companyセクションのラベル縮小 */
+            #company-section .company-label {
+                font-size: 0.75rem;
             }
             .company-value { 
                 width: 100%; 
@@ -607,20 +629,20 @@
             </div>
         </section>
 
-        <!-- 新規追加: 会社概要セクション -->
-        <section id="company-section">
-            <div class="section-header">
-                <h2 class="section-title">Company</h2>
-                <span class="section-number">03</span>
-            </div>
-            
-            <div id="company-list" class="company-list"></div>
-        </section>
-
+        <!-- 修正: ContactセクションをCompanyセクションの上に配置 -->
         <section class="contact-section">
             <h2 class="contact-title">Start a Project</h2>
             <ul id="links-list" class="links-list">
             </ul>
+        </section>
+
+        <!-- 修正: CompanyセクションをContactの下に配置 -->
+        <section id="company-section">
+            <div class="section-header">
+                <h2 class="section-title">Company</h2>
+            </div>
+            
+            <div id="company-list" class="company-list"></div>
         </section>
 
         <footer>
