@@ -133,7 +133,6 @@
 
         .main-title {
             font-size: 3.75rem;
-            /* text-transform: uppercase;  <-- 削除: 大文字小文字をそのまま表示するため */
             text-transform: none; 
             margin-bottom: 2rem;
             word-break: break-word;
@@ -401,6 +400,48 @@
             max-width: 900px; /* 読みやすい幅 */
         }
 
+        /* === 会社概要 (Company Profile) === */
+        /* 新規追加: コンサルタントらしい整然としたリストデザイン */
+        .company-list {
+            border-top: 2px solid #000;
+        }
+        .company-row {
+            display: flex;
+            display: -webkit-flex;
+            border-bottom: 2px solid #000;
+            padding: 1.5rem 0;
+            font-size: 1.125rem;
+            align-items: baseline;
+        }
+        .company-label {
+            width: 30%;
+            font-weight: bold;
+            padding-right: 1rem;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .company-value {
+            width: 70%;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            .company-row { 
+                display: block; 
+                padding: 1rem 0;
+            }
+            .company-label { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+            .company-value { 
+                width: 100%; 
+                font-weight: bold;
+            }
+        }
+
         /* === リンク・コンタクト (Contact) === */
         .contact-section {
             border: 4px solid #000;
@@ -548,7 +589,7 @@
 
         <section>
             <div class="section-header">
-                <h2 class="section-title">Service & </h2>
+                <h2 class="section-title">Service & Works</h2>
                 <span class="section-number">01</span>
             </div>
             
@@ -564,6 +605,16 @@
             <div class="text-content-area">
                 <p id="text-body" class="free-text-body"></p>
             </div>
+        </section>
+
+        <!-- 新規追加: 会社概要セクション -->
+        <section id="company-section">
+            <div class="section-header">
+                <h2 class="section-title">Company</h2>
+                <span class="section-number">03</span>
+            </div>
+            
+            <div id="company-list" class="company-list"></div>
         </section>
 
         <section class="contact-section">
@@ -589,7 +640,6 @@
         */
         const portfolioConfig = {
             // お名前（屋号があれば屋号、なければローマ字氏名）
-            // 修正：上下に並べるため、後半部分をブロック要素化
             name: "LeiKlab<span class='sub-name'>- KOTA KUSAKABE</span>",
             
             // 肩書き
@@ -602,8 +652,14 @@
             textContentTitle: "PHILOSOPHY",
             textContentBody: "【戦略を、絵に描いた餅にしない】\n\n多くの企業が「立派な戦略」を持ちながら、現場のリソース不足や仕組みの欠如により、実行段階で足踏みしています。\n\n私は大手広告代理店での「心を動かすマーケティング」と、大手コンサルティングファームでの「無駄を削ぐ業務設計」、この2つの視点を統合できる希少なパートナーです。\n\n「地元の企業を、世界レベルのノウハウで強くする」。\n経営者様の右腕として、戦略策定から日々の業務改善まで、泥臭く伴走いたします。",
 
+            // === 会社概要設定 (新規追加) ===
+            companyInfo: [
+                { label: "屋号", value: "LeiKlab" },
+                { label: "代表者名", value: "日下部 恒太" },
+                { label: "所在地", value: "広島県広島市西区小河内町" }
+            ],
+
             // === 画像・詳細設定 ===
-            // 修正：placehold.coで画像を表示するための label (プレースホルダー画像用テキスト) を追加
             galleryData: [
                 {
                     title: "SERVICE 01<br>MARKETING",
@@ -616,23 +672,23 @@
                     label: "OPERATIONS"
                 },
                 {
-                    title: "INDUSTRY:<br>AUTOMOTIVE",
+                    title: "INDUSTRY<br>AUTOMOTIVE",
                     desc: "自動車整備・販売業向け支援",
                     label: "AUTOMOTIVE"
                 },
                 {
-                    title: "INDUSTRY:<br>BABY & KIDS",
+                    title: "INDUSTRY<br>BABY & KIDS",
                     desc: "ベビー・キッズ業界向け支援",
                     label: "BABY & KIDS"
                 },
                 {
-                    title: "WORKS 01<br>自動車販売店様",
+                    title: "WORKS01<br>自動車販売店様",
                     desc: "Web集客数 150%UP<br>事務工数 30%削減",
-                    label: "WORKS: AUTO"
+                    label: "WORKS AUTO"
                 },
                 {
-                    title: "WORKS 02<br>ベビー・キッズ用品輸入代理店様",
-                    desc: "LTV 200%UP",
+                    title: "WORKS02<br>ベビー・キッズ用品輸入代理店様",
+                    desc: "Web集客数 50%UP<br>LTV 100%UP",
                     label: "WORKS: IMPORT"
                 }
             ],
@@ -644,7 +700,6 @@
             imageExtension: ".jpg",
             
             // === リンクボタン設定 ===
-            // 修正：指定されたGoogleフォームのURLを設定
             links: [
                 { label: "CONTACT FORM", url: "https://forms.gle/fVg1tjyNyQvbBMwW6" }
             ]
@@ -681,6 +736,20 @@
             const plainName = tempDiv.textContent || tempDiv.innerText || "";
             document.getElementById('user-copyright').textContent = `© ${new Date().getFullYear()} ${plainName}`;
 
+            // --- 会社概要の反映 (新規追加) ---
+            const companyList = document.getElementById('company-list');
+            if (companyList && portfolioConfig.companyInfo) {
+                portfolioConfig.companyInfo.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'company-row';
+                    row.innerHTML = `
+                        <div class="company-label">${item.label}</div>
+                        <div class="company-value">${item.value}</div>
+                    `;
+                    companyList.appendChild(row);
+                });
+            }
+
             // --- スクロールアニメーション設定 ---
             const observerOptions = {
                 root: null, 
@@ -701,9 +770,6 @@
             const container = document.getElementById('gallery-grid');
             
             portfolioConfig.galleryData.forEach((item, index) => {
-                // 修正: 実際にアップロードされた画像を読み込む設定に変更
-                // 元のダミー画像生成コードは削除
-                
                 // 画像パスの生成: ./image/image1.jpg, ./image/image2.jpg ...
                 const src = `${portfolioConfig.imageFolder}image${index+1}${portfolioConfig.imageExtension}`;
                 
@@ -755,4 +821,3 @@
     </script>
 </body>
 </html>
-
